@@ -5,6 +5,8 @@ My Node.js project for the RaspberryPi to monitor and control my garage door.
 You will need a [Yubico API Key]  
 Put the ClientID and Key into the index.js variables. 
 
+
+###Images
 ![RaspberryPi Setup](https://raw.githubusercontent.com/AdamLJohnson/GarageMonitor/master/public/images/RaspberryPiSetup.jpg)
 
 ![Screenshot](https://raw.githubusercontent.com/AdamLJohnson/GarageMonitor/master/public/images/Screenshot.png)
