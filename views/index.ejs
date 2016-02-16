@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Adam's Garage Control</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body class="container">
+    <h1>Adam's Garage control</h1>
+
+		<div class="row">
+			<div class="col-md-12">
+				<%if (isDoorOpen == 0) { %>
+			<div class="alert alert-success" role="alert">Garage Door is closed</div>
+			<% } %>
+	    <%if (isDoorOpen == 1) { %>
+				<div class="alert alert-danger" role="alert">Garage Door is open</div>
+			<% } %>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<label for="publicKey">Door Control Secret Code:</label>
+	    	<input id="publicKey", name="publicKey" type="text" class="form-control">	
+			</div>			     
+		</div>
+		<div class="row" style="margin-top:10px;">
+			<div class="col-md-12">
+				<%if (isDoorOpen == 0) { %>
+					<button id="doorBtn" class="btn btn-primary col-md-12" style="width:100%">Open Garage Door</button>
+				<% } %>
+		    <%if (isDoorOpen == 1) { %>
+					<button id="doorBtn" class="btn btn-primary col-md-12" style="width:100%">Close Garage Door</button>
+				<% } %> 			
+			</div>
+		</div>
+		<div class="row" style="margin-top:10px;">
+			<div class="col-md-12">
+				<button class="btn col-md-12" onclick="history.go(0)" style="width:100%">Refresh</button>
+			</div>
+		</div>
+
+		<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+    	toastr.options.positionClass = 'toast-bottom-right';
+    	$(function () {
+    		$('#doorBtn').click(function () {
+    			$.ajax({
+    				method: 'POST',
+					  dataType: "json",
+					  url: './',
+					  data: {publicKey : $('#publicKey').val()},
+					  success: function (value) {
+					  	if (value.success)
+					  		toastr.success('The command was processed successfully!');
+					  	else
+					  		toastr.error('The command was not processed successfully!');
+					  	$('#publicKey').val('');
+					  }
+					});
+    		});
+    	});
+    </script>
+  </body>
+</html>
